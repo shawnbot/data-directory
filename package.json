@@ -1,0 +1,29 @@
+{
+  "name": "jekyll-data",
+  "version": "1.0.0",
+  "description": "Load data from a directory like Jekyll",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shawnbot/jekyll-data"
+  },
+  "keywords": [
+    "jekyll",
+    "data",
+    "compatibility"
+  ],
+  "author": "Shawn Allen (https://github.com/shawnbot)",
+  "license": "CC0",
+  "bugs": {
+    "url": "https://github.com/shawnbot/jekyll-data/issues"
+  },
+  "homepage": "https://github.com/shawnbot/jekyll-data",
+  "dependencies": {
+    "async": "^1.4.2",
+    "js-yaml": "^3.4.2",
+    "tito": "^0.4.0"
+  }
+}
