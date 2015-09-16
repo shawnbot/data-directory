@@ -1,7 +1,13 @@
 # data-directory
 
-This is a Node module for loading structured data from a directory in the style of [Jekyll's `_data`][data files].
+This is a Node module for loading structured data from a directory in the style of [Jekyll's `_data`][data files]. Install it with:
 
+```
+npm install data-directory
+```
+
+
+### Directory Structure
 Your directory should contain one or more files with the following extensions:
 
 * `.csv` for comma-separated values
@@ -18,10 +24,10 @@ loadData('_data', function(error, data) {
 });
 ```
 
+#### Nested Directories
 Nested directories will introduce new levels in the data structure. For instance, if you data directory looks like this:
 
 ```
-_data
 ├─ bar.json
 └─ baz
    └─ qux.csv
