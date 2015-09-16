@@ -14,27 +14,37 @@ module.exports = function load(dir, callback) {
   if (!dir.match(/^[~\/]/)) {
     dir = path.join(process.cwd(), dir);
   }
-  return createDataObject(dir, callback);
+  return getData(dir, callback);
 };
 
-function createDataObject(dir, done) {
+function getData(dir, done) {
   var data = {};
   async.waterfall([
     function readdir(next) {
       fs.readdir(dir, next);
     },
     function qualifyFilenames(files, next) {
-      next(null, files.sort(ascending)
+      next(null, files
+        // sort the filenames alphabetically
+        .sort(ascending)
+        // ignore files that begin with _
+        .filter(function(filename) {
+          return !filename.match(/^_/);
+        })
+        // prefix them with the directory path
         .map(function(filename) {
           return path.join(dir, filename);
         }));
     },
     function readFiles(filenames, next) {
       async.mapSeries(filenames, function(filename, next) {
+        // the name of the data key is the basename minus the extension
         var name = path.basename(filename)
           .replace(/\.[^\.]+$/, '');
         read(filename, function(error, _data) {
           if (error) return next(error);
+          // only set the data key if there's data
+          // (this allows read() to skip files by returning null)
           if (_data) data[name] = _data;
           next(null, _data);
         });
@@ -51,7 +61,7 @@ function read(filename, done) {
 
     if (stat.isDirectory()) {
       // if the file is a directory, read its data recursively
-      return createDataObject(filename, done);
+      return getData(filename, done);
     } else {
       // otherwise, ascertain its format using its filename extension
       var format = filename.split('.').pop();
@@ -90,6 +100,7 @@ function read(filename, done) {
   });
 }
 
+// ascending sort comparator
 function ascending(a, b) {
   return a > b ? 1 : a < b ? -1 : 0;
 }
