@@ -4,7 +4,7 @@
   "description": "Load data from a directory like Jekyll",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/spec"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
     "async": "^1.4.2",
     "js-yaml": "^3.4.2",
     "tito": "^0.4.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.2"
   }
 }
