@@ -6,19 +6,46 @@ This is a Node module for loading structured data from a directory in the style 
 npm install data-directory
 ```
 
+## API
+The `data-directory` module exports two top-level functions:
+
+1. `load(dirname, callback)` asynchronously loads all of the data in a directory
+   and calls the `callback` function with the entire data structure when finished.
+
+  ```js
+  var datadir = require('data-directory');
+  datadir.load('path/to/data', function(error, data) {
+    // your data here
+  });
+  ```
+  
+1. `proxy(dirname [, data])` creates a [harmony proxy] that loads data
+   synchronously using the same directory structure.
+
+  ```js
+  var datadir = require('data-directory');
+  var data = datadir.proxy('path/to/data');
+  // reads path/to/data/foo.{csv,json,tsv,ya?ml}
+  // or, if path/to/data/foo is a directory, returns a new proxy
+  var foo = data.foo;
+  ```
+  
+  :warning: **In order to use the proxy feature, you'll need to run Node with
+  the `--harmony-proxies` flag.**
 
 ### Directory Structure
 Your directory should contain one or more files with the following extensions:
 
 * `.csv` for comma-separated values
 * `.json` for JSON
+* `.tsv` for tab-separated values
 * `.yaml` or `.yml` for YAML
 
 You can read them all into a single data structure like this:
 
 ```js
-var loadData = require('data-directory');
-loadData('_data', function(error, data) {
+var datadir = require('data-directory');
+datadir.load('_data', function(error, data) {
   if (error) return console.error('error:', error);
   console.log('data:', JSON.stringify(data, null, '  '));
 });
