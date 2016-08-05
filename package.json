@@ -4,7 +4,7 @@
   "description": "Load data from a directory like Jekyll",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/spec"
+    "test": "mocha --harmony-proxies test/spec"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,8 @@
   "homepage": "https://github.com/shawnbot/data-directory",
   "dependencies": {
     "async": "^1.4.2",
+    "csv-parse": "^1.1.7",
+    "harmony-proxy": "^1.0.1",
     "js-yaml": "^3.4.2",
     "tito": "^0.4.0"
   },

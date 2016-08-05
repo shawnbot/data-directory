@@ -7,3 +7,8 @@ module.exports = function yaml(filename, format, done) {
     return done(null, jsyaml.safeLoad(buffer));
   });
 };
+
+module.exports.sync = function(filename, format) {
+  var buffer = fs.readFileSync(filename, 'utf8');
+  return jsyaml.safeLoad(buffer);
+};

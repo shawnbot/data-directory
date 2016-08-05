@@ -7,3 +7,8 @@ module.exports = function(filename, format, done) {
   });
 };
 
+module.exports.sync = function(filename, format) {
+  var buffer = fs.readFileSync(filename, 'utf8');
+  return JSON.parse(buffer.toString());
+};
+
