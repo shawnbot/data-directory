@@ -19,8 +19,8 @@ The `data-directory` module exports two top-level functions:
   });
   ```
   
-1. `proxy(dirname [, data])` creates a [harmony proxy] that loads data
-   synchronously using the same directory structure.
+1. `proxy(dirname [, data])` creates a [proxy] object that loads data
+   synchronously, and only as needed, from the same directory structure.
 
   ```js
   var datadir = require('data-directory');
@@ -77,3 +77,4 @@ Then it should parse into a JSON structure that looks like:
 
 [Jekyll]: https://jekyllrb.com
 [data files]: https://jekyllrb.com/docs/datafiles/
+[proxy]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
