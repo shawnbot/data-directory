@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/shawnbot/data-directory",
   "dependencies": {
-    "async": "^1.4.2",
+    "async-waterfall": "^0.1.5",
+    "async.mapseries": "^0.5.2",
     "csv-parse": "^1.1.7",
     "harmony-proxy": "^1.0.1",
     "js-yaml": "^3.4.2",
