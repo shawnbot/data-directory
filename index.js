@@ -1,8 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var async = require('async');
-var tito = require('tito');
-var yaml = require('js-yaml');
+var formats = require('./formats');
 
 module.exports = function load(dir, callback) {
   if (!arguments.length) {
@@ -65,36 +64,12 @@ function read(filename, done) {
     } else {
       // otherwise, ascertain its format using its filename extension
       var format = filename.split('.').pop();
-      if (format !== filename) {
-        switch (format) {
-          // JSON files can just be require()'d
-          case 'json':
-            return fs.readFile(filename, 'utf8', function(error, buffer) {
-              if (error) return done(error);
-              return done(null, JSON.parse(buffer.toString()));
-            });
 
-          // YAML files are parsed as buffers
-          case 'yml':
-          case 'yaml':
-            return fs.readFile(filename, 'utf8', function(error, buffer) {
-              if (error) return done(error);
-              return done(null, yaml.safeLoad(buffer));
-            });
-
-          case 'csv':
-          case 'tsv':
-            var data = [];
-            var parse = tito.createReadStream(format);
-            return fs.createReadStream(filename)
-              .pipe(parse)
-              .on('error', done)
-              .on('data', function(d) { data.push(d); })
-              .on('end', function() { done(null, data); });
-        }
+      if (format !== filename && formats.hasOwnProperty(format)) {
+        return formats[format](filename, format, done);
       }
 
-      // 
+      // XXX no data?
       return done();
     }
   });
