@@ -22,6 +22,7 @@ describe('proxy', function() {
   it('creates proxies that read data', function() {
     var data = datadir.proxy(localDataPath);
     assert.deepEqual(data.test, {foo: 'bar'});
+    assert.deepEqual(data.bar.x, {fizz: 'buzz', baz: 'quxx'});
   });
 
 });

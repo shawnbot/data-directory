@@ -19,8 +19,14 @@ module.exports = function createProxy(dir) {
 
   var handler = {
     get: function(target, name) {
-      var pattern = dir + '/' + name + '.{' + formatExtensions + '}';
-      var files = glob.sync(pattern);
+      // search for the directory, then the filenames
+      var globs = [dir + '/' + name];
+      globs.push(globs[0] + '.{' + formatExtensions + '}');
+      // get all the files
+      var files = globs.reduce(function(files, pattern) {
+        return files.concat(glob.sync(pattern));
+      }, []);
+      // TODO: warn about ignored files here?
       var filename = files[0];
       if (filename) {
         var cached = target[name];
